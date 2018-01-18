@@ -4,15 +4,25 @@ import android.text.TextUtils;
 
 
 /**
- * Created by Administrator on 2018/1/18.
+ * Created by ty_sany@163.com on 2018/1/18.
+ * <p>
+ * <p>区域过滤器</p>
  */
 public class DirectFilter extends AbsFilter {
 
+    /**
+     * 国家
+     */
     public String country;
-    public String launguage;
+
+    /**
+     * 语言
+     */
+    public String language;
 
     @Override
     public boolean filter(AbsFilter suitableCondition) throws FilterException {
+
         boolean result = true;
 
         if (suitableCondition == null) {
@@ -34,12 +44,12 @@ public class DirectFilter extends AbsFilter {
         DirectFilter temp = (DirectFilter) suitableCondition;
 
         //找到不通过的成立
-        if (!TextUtils.isEmpty(temp.launguage) && !temp.launguage.equals(this.launguage)) {
+        if (temp.language != null && !TextUtils.isEmpty(temp.language) && !temp.language.equals(this.language)) {
             return false;
         }
 
         //判断国家
-        if (!TextUtils.isEmpty(temp.country) && !temp.country.equals(this.country)) {
+        if (temp.country != null && !TextUtils.isEmpty(temp.country) && !temp.country.equals(this.country)) {
             return false;
         }
         return result;

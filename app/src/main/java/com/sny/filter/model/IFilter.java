@@ -1,7 +1,7 @@
 package com.sny.filter.model;
 
 /**
- * Created by Administrator on 2018/1/18.
+ * Created by ty_sany@163.com on 2018/1/18.
  */
 
 public interface IFilter {

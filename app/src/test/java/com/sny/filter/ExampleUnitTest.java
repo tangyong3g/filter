@@ -1,9 +1,13 @@
 package com.sny.filter;
 
-import android.icu.text.MessagePattern;
-import android.util.Log;
+
+import com.sny.filter.model.AbsFilter;
+import com.sny.filter.model.DirectFilter;
 
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -14,7 +18,7 @@ import static org.junit.Assert.*;
  */
 public class ExampleUnitTest {
 
-    @Test
+    //    @Test
     public void randomone() throws Exception {
 
         int Atype = 0;
@@ -29,9 +33,202 @@ public class ExampleUnitTest {
             }
             count--;
         }
-        Log.i("tyler.tang", "Atype:\t" + Atype + "-- Btype:\t" + BType);
 
         assertTrue(BType > 30);
+    }
+
+
+    /**
+     * 1：创建1000个客户端样本
+     * 2：服务器下发30%样本为可用。
+     * 3: 产生这30%的样本出来。
+     *
+     * @throws Exception
+     */
+//    @Test
+    public void testIncreateTenPercent() throws Exception {
+
+        //样本数量
+        int testCount = 1000;
+
+        //服务器条件
+        AbsFilter suitableFilter = new DirectFilter();
+        suitableFilter.percent = 30;
+        suitableFilter = (DirectFilter) suitableFilter;
+        ((DirectFilter) suitableFilter).language = null;
+        ((DirectFilter) suitableFilter).country = null;
+
+        //容器装载 选择和没有选择的样本
+        List<AbsFilter> selectedSample = new ArrayList<>();
+        List<AbsFilter> unSelectedSample = new ArrayList<>();
+
+        for (int i = 0; i < testCount; i++) {
+
+            //模拟客户端得到数据开始计算
+            DirectFilter directFilter = new DirectFilter();
+            boolean selected = directFilter.filter(suitableFilter);
+
+            if (selected) {
+                selectedSample.add(directFilter);
+            } else {
+                unSelectedSample.add(directFilter);
+            }
+        }
+        System.out.print("被选中的样本:" + selectedSample.size());
+        System.out.print("没有被选中的样本:" + unSelectedSample.size());
+
+    }
+
+
+    /**
+     * 1：创建1000个客户端样本
+     * 2：服务器下发30%样本为可用。
+     * 3: 产生这30%的样本出来。
+     * 4: 然后再增长 到 40%
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testRandomTwo() throws Exception {
+
+        //样本数量
+        int testCount = 10000;
+
+        int selectedSampleCount = 0;
+        int unSelectedSampleCount = 0;
+
+        //服务器条件
+        AbsFilter suitableFilter = new DirectFilter();
+        suitableFilter.percent = 10;
+        suitableFilter = (DirectFilter) suitableFilter;
+        ((DirectFilter) suitableFilter).language = null;
+        ((DirectFilter) suitableFilter).country = null;
+
+        //容器装载 选择和没有选择的样本
+        List<AbsFilter> selectedSample = new ArrayList<>();
+        List<AbsFilter> unSelectedSample = new ArrayList<>();
+
+        for (int i = 0; i < testCount; i++) {
+
+            //模拟客户端得到数据开始计算
+            DirectFilter directFilter = new DirectFilter();
+            boolean selected = directFilter.filter(suitableFilter);
+
+            if (selected) {
+                selectedSample.add(directFilter);
+            } else {
+                unSelectedSample.add(directFilter);
+            }
+        }
+        System.out.println("被选中的样本:" + selectedSample.size());
+        System.out.println("没有被选中的样本:" + unSelectedSample.size());
+        System.out.println("第一个阶段完成" + unSelectedSample.size());
+        System.out.println("第二阶段开始开始增长到40%");
+
+        AbsFilter suitableFilterTwo = new DirectFilter();
+        suitableFilterTwo.percent = 60;
+        suitableFilterTwo = (DirectFilter) suitableFilterTwo;
+        ((DirectFilter) suitableFilterTwo).language = null;
+        ((DirectFilter) suitableFilterTwo).country = null;
+
+
+        List<AbsFilter> total = new ArrayList<>();
+
+        total.addAll(selectedSample);
+        total.addAll(unSelectedSample);
+
+
+        for (int i = 0; i < total.size(); i++) {
+
+            DirectFilter filter = (DirectFilter) total.get(i);
+            filter.filter(suitableFilterTwo);
+
+            if (filter.calculateAndSelected) {
+                selectedSampleCount++;
+            } else {
+                unSelectedSampleCount++;
+            }
+        }
+
+        System.out.println("选中的样本:\t" + selectedSampleCount);
+        System.out.println("未选中的样本:\t" + unSelectedSampleCount);
+
+    }
+
+
+    /**
+     * 1：创建1000个客户端样本
+     * 2：服务器下发30%样本为可用。
+     * 3: 产生这30%的样本出来。
+     * 4: 然后再下降  10%.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testRandomThree() throws Exception {
+
+        //样本数量
+        int testCount = 10000;
+
+        int selectedSampleCount = 0;
+        int unSelectedSampleCount = 0;
+
+        //服务器条件
+        AbsFilter suitableFilter = new DirectFilter();
+        suitableFilter.percent = 30;
+        suitableFilter = (DirectFilter) suitableFilter;
+        ((DirectFilter) suitableFilter).language = null;
+        ((DirectFilter) suitableFilter).country = null;
+
+        //容器装载 选择和没有选择的样本
+        List<AbsFilter> selectedSample = new ArrayList<>();
+        List<AbsFilter> unSelectedSample = new ArrayList<>();
+
+        for (int i = 0; i < testCount; i++) {
+
+            //模拟客户端得到数据开始计算
+            DirectFilter directFilter = new DirectFilter();
+            boolean selected = directFilter.filter(suitableFilter);
+
+            if (selected) {
+                selectedSample.add(directFilter);
+            } else {
+                unSelectedSample.add(directFilter);
+            }
+        }
+        System.out.println("被选中的样本:" + selectedSample.size());
+        System.out.println("没有被选中的样本:" + unSelectedSample.size());
+        System.out.println("第一个阶段完成" + unSelectedSample.size());
+        System.out.println("第二阶段开始开始增长到40%");
+
+        AbsFilter suitableFilterTwo = new DirectFilter();
+        suitableFilterTwo.percent = 10;
+        suitableFilterTwo = (DirectFilter) suitableFilterTwo;
+        ((DirectFilter) suitableFilterTwo).language = null;
+        ((DirectFilter) suitableFilterTwo).country = null;
+
+
+        List<AbsFilter> total = new ArrayList<>();
+
+        total.addAll(selectedSample);
+        total.addAll(unSelectedSample);
+
+
+        for (int i = 0; i < total.size(); i++) {
+
+            DirectFilter filter = (DirectFilter) total.get(i);
+            filter.filter(suitableFilterTwo);
+
+            if (filter.calculateAndSelected) {
+                selectedSampleCount++;
+            } else {
+                unSelectedSampleCount++;
+            }
+        }
+
+        System.out.println("选中的样本:\t" + selectedSampleCount);
+        System.out.println("未选中的样本:\t" + unSelectedSampleCount);
+
     }
 
 }
