@@ -91,7 +91,9 @@ public abstract class AbsFilter implements IFilter, Serializable {
 
         //下降时范围是原来被选中的样本，然后重新计算
         if (calculateAndSelected) {
-            result = (Math.random() * 100 < suitableCondition.percent);
+
+            float calcPercent = (float) (suitableCondition.percent) / (float) (percent) * 100;
+            result = (Math.random() * 100 < calcPercent);
         }
         calculateAndSelected = result;
 

@@ -88,7 +88,7 @@ public class ExampleUnitTest {
      *
      * @throws Exception
      */
-    @Test
+//    @Test
     public void testRandomTwo() throws Exception {
 
         //样本数量
@@ -173,6 +173,8 @@ public class ExampleUnitTest {
         int selectedSampleCount = 0;
         int unSelectedSampleCount = 0;
 
+        System.out.println("第一个阶段开始共有" + testCount + "用户\t\n选择30%的用户");
+
         //服务器条件
         AbsFilter suitableFilter = new DirectFilter();
         suitableFilter.percent = 30;
@@ -198,8 +200,9 @@ public class ExampleUnitTest {
         }
         System.out.println("被选中的样本:" + selectedSample.size());
         System.out.println("没有被选中的样本:" + unSelectedSample.size());
-        System.out.println("第一个阶段完成" + unSelectedSample.size());
-        System.out.println("第二阶段开始开始增长到40%");
+        System.out.println("第一个阶段完成");
+
+        System.out.println("第二阶段开始下降到10%");
 
         AbsFilter suitableFilterTwo = new DirectFilter();
         suitableFilterTwo.percent = 10;
