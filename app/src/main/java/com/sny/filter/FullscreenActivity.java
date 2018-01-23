@@ -1,12 +1,18 @@
 package com.sny.filter;
 
 import android.annotation.SuppressLint;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.net.core.service.config.ServiceRemoteConfigInstance;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -50,7 +56,8 @@ public class FullscreenActivity extends AppCompatActivity {
         mContentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toggle();
+//                toggle();
+                getValue();
             }
         });
 
@@ -58,6 +65,22 @@ public class FullscreenActivity extends AppCompatActivity {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+    }
+
+
+    private void getValue() {
+
+        FirebaseRemoteConfig.getInstance().setDefaults(R.xml.default_value);
+
+        final ServiceRemoteConfigInstance config = ServiceRemoteConfigInstance.getInstance(this.getApplicationContext()).setIsSupportFireBase(true, R.xml.default_value, new ServiceRemoteConfigInstance.OnFirebaseFectchComplete() {
+            @Override
+            public void onComplete(@NonNull Task task) {
+                String value = ServiceRemoteConfigInstance.getInstance(getApplicationContext()).getString("test2");
+                Log.i("tyler.tang", "value is :\t" + value);
+            }
+        });
+
+
     }
 
     @Override
