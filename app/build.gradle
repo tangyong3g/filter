@@ -21,6 +21,10 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -33,7 +37,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.google.firebase:firebase-core:9.6.0'
     compile project(':netcore')
-
+    compile 'com.google.code.gson:gson:2.8.2'
 
 }
 

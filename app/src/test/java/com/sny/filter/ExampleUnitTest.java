@@ -1,9 +1,12 @@
 package com.sny.filter;
 
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.sny.filter.model.AbsFilter;
 import com.sny.filter.model.DirectFilter;
 
+import org.json.JSONObject;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -164,8 +167,12 @@ public class ExampleUnitTest {
      *
      * @throws Exception
      */
-    @Test
+//    @Test
     public void testRandomThree() throws Exception {
+
+//        String jsonStr = "{\\\"percent\\\":30,\\\"isCalculate\\\":false,\\\"calculateAndSelected\\\":false,\\\"country\\\":\\\"\\\",\\\"language\\\":\\\"\\\"}";
+//
+//        int percent =
 
         //样本数量
         int testCount = 10000;
@@ -231,6 +238,27 @@ public class ExampleUnitTest {
 
         System.out.println("选中的样本:\t" + selectedSampleCount);
         System.out.println("未选中的样本:\t" + unSelectedSampleCount);
+
+    }
+
+    /**
+     * 1：创建1000个客户端样本
+     * 2：服务器下发30%样本为可用。
+     * 3: 产生这30%的样本出来。
+     * 4: 然后再下降  10%.
+     *
+     * @throws Exception
+     */
+//    @Test
+    public void testRandomFour() throws Exception {
+
+        String jsonStr =  "{   \"percent\": 30,   \"isCalculate\": false,   \"calculateAndSelected\": false,   \"country\": \"\",   \"language\": \"\" }";
+
+        Gson gson = new Gson();
+        DirectFilter filter = gson.fromJson(jsonStr, DirectFilter.class);
+
+
+        System.out.println("选中的样本:\t" + filter.percent);
 
     }
 

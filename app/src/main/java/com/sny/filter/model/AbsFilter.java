@@ -7,6 +7,22 @@ import java.io.Serializable;
  * 产生随机数，当前客户端过滤的属性
  * <p>
  * 这个生命周期和服务器需求一样长，需要被持久化
+ * <p>
+ * <p>
+ * <p>
+ * <p>
+ * {
+ * "percent": 30,
+ * "isCalculate": false,
+ * "calculateAndSelected": false,
+ * "country": "",
+ * "language": ""
+ * }
+ * <p>
+ * {\"percent\":30,\"isCalculate\":false,\"calculateAndSelected\":false,\"country\":\"\",\"language\":\"\"}
+ * </p>
+ * <p>
+ * 关于firebase时间效益的问题 默认是12小时。
  */
 
 public abstract class AbsFilter implements IFilter, Serializable {
