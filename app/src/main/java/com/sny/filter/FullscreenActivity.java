@@ -18,6 +18,8 @@ import com.net.core.service.config.ServiceRemoteConfigInstance;
 import com.sny.filter.model.DirectFilter;
 import com.sny.filter.model.FilterException;
 
+import java.util.logging.Filter;
+
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
@@ -71,36 +73,17 @@ public class FullscreenActivity extends AppCompatActivity {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+
+        FilterManager.getInstance(this.getApplicationContext());
     }
 
 
     private void getValue() {
 
-//        FirebaseRemoteConfigSettings settings = new FirebaseRemoteConfigSettings.Builder().setDeveloperModeEnabled(BuildConfig.DEBUG).build();
-//        FirebaseRemoteConfig.getInstance().setConfigSettings(settings);
-        FirebaseRemoteConfig.getInstance().setDefaults(R.xml.default_value);
+        FilterManager instance = FilterManager.getInstance(this.getApplicationContext());
+        boolean result = instance.getDirectionValue("filter");
 
-        ServiceRemoteConfigInstance.getInstance(this.getApplicationContext()).setIsSupportFireBase(true, R.xml.default_value, new ServiceRemoteConfigInstance.OnFirebaseFectchComplete() {
-            @Override
-            public void onComplete(@NonNull Task task) {
-                String value = ServiceRemoteConfigInstance.getInstance(getApplicationContext()).getString("filter");
-//
-                Gson gson = new Gson();
-                DirectFilter filter = gson.fromJson(value, DirectFilter.class);
-
-                Log.i(TAG, "value is :\t" + filter.percent);
-
-                DirectFilter self = new DirectFilter();
-
-                try {
-                    boolean suitable = self.filter(filter);
-                    Log.i(TAG, "是否选中" + suitable);
-                } catch (FilterException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        }, 0);
-
+        Log.i(TAG, result + "");
     }
 
     @Override
