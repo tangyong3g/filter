@@ -2,4 +2,4 @@ include ':app'
 
 
 include ':netcore'
-project(':netcore').projectDir = new File(rootProject.projectDir, '../netcore/netservicecore')
+project(':netcore').projectDir = new File(rootProject.projectDir, '../../workProject/netcore/netservicecore')
