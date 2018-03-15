@@ -3,7 +3,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 //aar包的版本
-version = "1.0.5"
+version = "1.0.6"
 // 项目的主页
 def siteUrl = 'https://github.com/tangyong3g/filter'
 // Git仓库的url
