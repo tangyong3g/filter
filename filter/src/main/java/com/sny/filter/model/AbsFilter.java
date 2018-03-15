@@ -1,5 +1,7 @@
 package com.sny.filter.model;
 
+import android.util.Log;
+import com.sny.filter.BuildConfig;
 import java.io.Serializable;
 
 /**
@@ -27,7 +29,7 @@ import java.io.Serializable;
 
 public abstract class AbsFilter implements IFilter, Serializable {
 
-    public static final String Tag = "Filter";
+    public static final String TAG = "filter";
 
     /**
      * 产生随机数，当前客户端被过滤的比率
@@ -103,6 +105,10 @@ public abstract class AbsFilter implements IFilter, Serializable {
      */
     private boolean subtract(AbsFilter suitableCondition) {
 
+        if (BuildConfig.DEBUG) {
+            Log.i(TAG, " AbsFilter subtract calculateAndSelected is " + calculateAndSelected + "\t percent:\t" + percent);
+        }
+
         boolean result = false;
 
         //下降时范围是原来被选中的样本，然后重新计算
@@ -112,6 +118,10 @@ public abstract class AbsFilter implements IFilter, Serializable {
             result = (Math.random() * 100 < calcPercent);
         }
         calculateAndSelected = result;
+
+        if (BuildConfig.DEBUG) {
+            Log.i(TAG, "AbsFilter subtract result is :\t" + calculateAndSelected);
+        }
 
         return result;
     }

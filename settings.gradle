@@ -1,5 +1,8 @@
-include ':app'
+include ':app', ':filter'
 
+//
+//include ':netcore'
+//project(':netcore').projectDir = new File(rootProject.projectDir, '../../workProject/netcore/netservicecore')
 
-include ':netcore'
-project(':netcore').projectDir = new File(rootProject.projectDir, '../../workProject/netcore/netservicecore')
+//include ':netcore'
+//project(':netcore').projectDir = new File(rootProject.projectDir, '../../workProject/netcore/netservicecore')
